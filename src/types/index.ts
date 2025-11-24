@@ -27,9 +27,20 @@ export type ChartType =
   | 'radial-bar'
   | 'funnel';
 
+export interface Annotation {
+  id: string;
+  x: number | string;
+  y: number | string;
+  text: string;
+  color?: string;
+  fontSize?: number;
+}
+
 export interface ChartConfig {
   type: ChartType;
   title: string;
+  subtitle?: string;
+  dataSource?: string;
   xAxis?: string;
   yAxis?: string;
   category?: string;
@@ -39,6 +50,10 @@ export interface ChartConfig {
   showGrid: boolean;
   animationDuration: number;
   animationEnabled: boolean;
+  // Economist-specific features
+  economistMode?: boolean;
+  economistPalette?: 'bluesMonochrome' | 'multiSeries' | 'greysMonochrome' | 'diverging' | 'classicEconomist';
+  annotations?: Annotation[];
 }
 
 export interface VisualizationState {

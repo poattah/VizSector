@@ -21,11 +21,16 @@ interface AppState {
 const defaultChartConfig: ChartConfig = {
   type: 'bar',
   title: 'Untitled Visualization',
+  subtitle: '',
+  dataSource: '',
   colors: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'],
   showLegend: true,
   showGrid: true,
   animationDuration: 1000,
   animationEnabled: true,
+  economistMode: false,
+  economistPalette: 'classicEconomist',
+  annotations: [],
 };
 
 export const useStore = create<AppState>((set) => ({

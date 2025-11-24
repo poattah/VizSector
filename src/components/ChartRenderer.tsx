@@ -31,6 +31,8 @@ import {
 } from 'recharts';
 import { useStore } from '../store/useStore';
 import type { DataPoint } from '../types';
+import { EconomistChartWrapper } from './EconomistChartWrapper';
+import { EconomistPalettes, EconomistColors } from '../styles/economist-theme';
 
 export const ChartRenderer: React.FC = () => {
   const { dataset, chartConfig } = useStore();
@@ -47,8 +49,29 @@ export const ChartRenderer: React.FC = () => {
     );
   }
 
-  const { type, xAxis, yAxis, colors, showLegend, showGrid, title } = chartConfig;
+  const {
+    type,
+    xAxis,
+    yAxis,
+    colors,
+    showLegend,
+    showGrid,
+    title,
+    subtitle,
+    dataSource,
+    economistMode,
+    economistPalette = 'classicEconomist',
+  } = chartConfig;
   const data = dataset.data;
+
+  // Use Economist palette if in Economist mode
+  const chartColors = economistMode && economistPalette
+    ? EconomistPalettes[economistPalette]
+    : colors;
+
+  // Grid styling for Economist mode
+  const gridColor = economistMode ? EconomistColors.grey.gridline : undefined;
+  const gridOpacity = economistMode ? 0.3 : undefined;
 
   const renderChart = () => {
     switch (type) {
@@ -56,7 +79,13 @@ export const ChartRenderer: React.FC = () => {
       case 'column':
         return (
           <BarChart data={data}>
-            {showGrid && <CartesianGrid strokeDasharray="3 3" />}
+            {showGrid && (
+              <CartesianGrid
+                strokeDasharray="0"
+                stroke={gridColor}
+                opacity={gridOpacity}
+              />
+            )}
             <XAxis dataKey={xAxis || dataset.columns[0]} />
             <YAxis />
             <Tooltip />
@@ -65,7 +94,7 @@ export const ChartRenderer: React.FC = () => {
               <Bar
                 key={col}
                 dataKey={col}
-                fill={colors[idx % colors.length]}
+                fill={chartColors[idx % chartColors.length]}
                 animationDuration={chartConfig.animationDuration}
               />
             ))}
@@ -75,7 +104,13 @@ export const ChartRenderer: React.FC = () => {
       case 'line':
         return (
           <LineChart data={data}>
-            {showGrid && <CartesianGrid strokeDasharray="3 3" />}
+            {showGrid && (
+              <CartesianGrid
+                strokeDasharray="0"
+                stroke={gridColor}
+                opacity={gridOpacity}
+              />
+            )}
             <XAxis dataKey={xAxis || dataset.columns[0]} />
             <YAxis />
             <Tooltip />
@@ -85,8 +120,8 @@ export const ChartRenderer: React.FC = () => {
                 key={col}
                 type="monotone"
                 dataKey={col}
-                stroke={colors[idx % colors.length]}
-                strokeWidth={2}
+                stroke={chartColors[idx % chartColors.length]}
+                strokeWidth={economistMode ? 2.5 : 2}
                 animationDuration={chartConfig.animationDuration}
               />
             ))}
@@ -386,11 +421,15 @@ export const ChartRenderer: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col p-6 bg-background animate-fade-in">
-      <h2 className="text-2xl font-semibold mb-6 text-foreground tracking-tight">{title}</h2>
+    <EconomistChartWrapper
+      title={title}
+      subtitle={subtitle}
+      dataSource={dataSource}
+      economistMode={economistMode}
+    >
       <ResponsiveContainer width="100%" height="100%">
         {renderChart()}
       </ResponsiveContainer>
-    </div>
+    </EconomistChartWrapper>
   );
 };

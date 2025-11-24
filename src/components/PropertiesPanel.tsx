@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../store/useStore';
 import { exportToPNG, exportToSVG, exportToJSON } from '../utils/export';
-import { Settings, Download, Palette, Type, Grid, PlayCircle } from 'lucide-react';
+import { Settings, Download, Palette, Type, Grid, PlayCircle, Newspaper } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -10,6 +10,7 @@ import { Select } from './ui/select';
 import { Slider } from './ui/slider';
 import { Card, CardContent } from './ui/card';
 import { cn } from '../lib/utils';
+import { EconomistPalettes } from '../styles/economist-theme';
 
 export const PropertiesPanel: React.FC = () => {
   const { dataset, chartConfig, updateChartConfig } = useStore();
@@ -88,6 +89,78 @@ export const PropertiesPanel: React.FC = () => {
       <div className="flex-1 overflow-y-auto p-4">
         {activeTab === 'style' && (
           <div className="space-y-6">
+            {/* The Economist Mode */}
+            <div className="space-y-3 p-4 bg-muted/20 rounded-lg border border-border">
+              <Label className="flex items-center gap-2 text-foreground font-semibold">
+                <Newspaper size={16} className="text-[#E3120B]" />
+                The Economist Style
+              </Label>
+              <label className="flex items-center gap-3 cursor-pointer">
+                <Checkbox
+                  checked={chartConfig.economistMode || false}
+                  onChange={(e) => updateChartConfig({ economistMode: e.target.checked })}
+                />
+                <span className="text-sm text-foreground">Enable Economist Mode</span>
+              </label>
+              <p className="text-xs text-muted-foreground">
+                Apply The Economist's signature visual style with red branding, clean typography, and professional aesthetics
+              </p>
+
+              {chartConfig.economistMode && (
+                <>
+                  <div className="space-y-2 pt-2">
+                    <Label className="text-sm">Subtitle</Label>
+                    <Input
+                      type="text"
+                      value={chartConfig.subtitle || ''}
+                      onChange={(e) => updateChartConfig({ subtitle: e.target.value })}
+                      placeholder="Add descriptive subtitle"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm">Data Source</Label>
+                    <Input
+                      type="text"
+                      value={chartConfig.dataSource || ''}
+                      onChange={(e) => updateChartConfig({ dataSource: e.target.value })}
+                      placeholder="e.g., World Bank, 2024"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm">Color Palette</Label>
+                    <Select
+                      value={chartConfig.economistPalette || 'classicEconomist'}
+                      onChange={(e) => updateChartConfig({ economistPalette: e.target.value as any })}
+                    >
+                      <option value="classicEconomist">Classic Economist (Red + Blues)</option>
+                      <option value="bluesMonochrome">Blues Monochrome</option>
+                      <option value="multiSeries">Multi-Series</option>
+                      <option value="greysMonochrome">Greys Monochrome</option>
+                      <option value="diverging">Diverging</option>
+                    </Select>
+                  </div>
+
+                  <div className="flex gap-1 pt-2">
+                    {Object.entries(EconomistPalettes).map(([name, colors]) => (
+                      name === chartConfig.economistPalette && (
+                        <div key={name} className="flex gap-0.5 flex-1">
+                          {colors.map((color, i) => (
+                            <div
+                              key={i}
+                              className="flex-1 h-6 rounded-sm"
+                              style={{ backgroundColor: color }}
+                            />
+                          ))}
+                        </div>
+                      )
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
             <div className="space-y-2">
               <Label className="flex items-center gap-2 text-foreground">
                 <Type size={16} />
@@ -101,11 +174,12 @@ export const PropertiesPanel: React.FC = () => {
               />
             </div>
 
-            <div className="space-y-3">
-              <Label className="flex items-center gap-2 text-foreground">
-                <Palette size={16} />
-                Color Scheme
-              </Label>
+            {!chartConfig.economistMode && (
+              <div className="space-y-3">
+                <Label className="flex items-center gap-2 text-foreground">
+                  <Palette size={16} />
+                  Color Scheme
+                </Label>
               <div className="space-y-2">
                 {colorPresets.map((preset, idx) => (
                   <Card
@@ -123,7 +197,8 @@ export const PropertiesPanel: React.FC = () => {
                   </Card>
                 ))}
               </div>
-            </div>
+              </div>
+            )}
 
             <div className="space-y-3">
               <Label className="flex items-center gap-2 text-foreground">
