@@ -2,7 +2,10 @@ import { useRef } from 'react';
 import { useStore } from '../store/useStore';
 import { templates } from '../templates';
 import { importData, generateSampleData } from '../utils/dataImport';
-import { Upload, Table } from 'lucide-react';
+import { Upload, Table, Sparkles } from 'lucide-react';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
+import { cn } from '../lib/utils';
 
 export const Sidebar: React.FC = () => {
   const { setDataset, setSelectedTemplate, updateChartConfig } = useStore();
@@ -38,22 +41,25 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-80 bg-white border-r border-gray-200 flex flex-col h-full">
-      <div className="p-4 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-800">VizSector</h1>
-        <p className="text-sm text-gray-500">Data Visualization Studio</p>
+    <div className="w-80 bg-card border-r border-border flex flex-col h-full">
+      <div className="p-6 border-b border-border">
+        <div className="flex items-center gap-2 mb-1">
+          <Sparkles className="h-6 w-6 text-primary" />
+          <h1 className="text-2xl font-bold text-foreground">VizSector</h1>
+        </div>
+        <p className="text-sm text-muted-foreground">Data Visualization Studio</p>
       </div>
 
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Data</h2>
+      <div className="p-4 border-b border-border">
+        <h2 className="text-sm font-semibold text-foreground mb-3">Data</h2>
         <div className="space-y-2">
-          <button
+          <Button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+            className="w-full justify-start gap-2"
           >
             <Upload size={16} />
             Import Data
-          </button>
+          </Button>
           <input
             ref={fileInputRef}
             type="file"
@@ -61,42 +67,48 @@ export const Sidebar: React.FC = () => {
             onChange={handleFileUpload}
             className="hidden"
           />
-          <button
+          <Button
             onClick={loadSampleData}
-            className="w-full flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
+            variant="outline"
+            className="w-full justify-start gap-2"
           >
             <Table size={16} />
             Load Sample Data
-          </button>
+          </Button>
         </div>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <h2 className="text-sm font-semibold text-gray-700 mb-3">Templates</h2>
+        <h2 className="text-sm font-semibold text-foreground mb-3">Templates</h2>
         <div className="space-y-2">
           {templates.map((template) => (
-            <button
+            <Card
               key={template.id}
               onClick={() => handleTemplateSelect(template.id)}
-              className="w-full text-left p-3 border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition group"
+              className={cn(
+                "cursor-pointer transition-all hover:shadow-md hover:border-primary/50",
+                "group"
+              )}
             >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{template.thumbnail}</span>
-                <div>
-                  <h3 className="font-medium text-gray-800 group-hover:text-blue-600">
-                    {template.name}
-                  </h3>
-                  <p className="text-xs text-gray-500">{template.description}</p>
+              <CardContent className="p-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{template.thumbnail}</span>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">
+                      {template.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground truncate">{template.description}</p>
+                  </div>
                 </div>
-              </div>
-            </button>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
 
-      <div className="p-4 border-t border-gray-200 text-xs text-gray-500">
+      <div className="p-4 border-t border-border text-xs text-muted-foreground">
         <p>© 2025 VizSector</p>
-        <p>Flourish Studio Clone</p>
+        <p className="text-primary/70">Flourish Studio Clone</p>
       </div>
     </div>
   );

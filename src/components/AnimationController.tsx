@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useStore } from '../store/useStore';
 import { Play, Pause, RotateCcw } from 'lucide-react';
+import { Button } from './ui/button';
+import { Slider } from './ui/slider';
 
 export const AnimationController: React.FC = () => {
   const { dataset, chartConfig, isAnimating, currentFrame, setIsAnimating, setCurrentFrame } = useStore();
@@ -47,32 +49,31 @@ export const AnimationController: React.FC = () => {
   }
 
   return (
-    <div className="bg-white border-t border-gray-200 px-6 py-4">
+    <div className="bg-card border-t border-border px-6 py-4 shadow-sm">
       <div className="flex items-center gap-4">
-        <button
+        <Button
           onClick={handlePlayPause}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          className="gap-2"
         >
           {isAnimating ? <Pause size={18} /> : <Play size={18} />}
           {isAnimating ? 'Pause' : 'Play'}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleReset}
-          className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+          variant="secondary"
+          className="gap-2"
         >
           <RotateCcw size={18} />
           Reset
-        </button>
+        </Button>
         <div className="flex-1">
-          <input
-            type="range"
-            min="0"
+          <Slider
+            min={0}
             max={maxFrames - 1}
             value={currentFrame}
             onChange={(e) => setCurrentFrame(Number(e.target.value))}
-            className="w-full"
           />
-          <div className="text-xs text-gray-600 mt-1">
+          <div className="text-xs text-muted-foreground mt-2 text-center">
             Frame: {currentFrame + 1} / {maxFrames}
           </div>
         </div>
