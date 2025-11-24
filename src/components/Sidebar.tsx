@@ -1,15 +1,20 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useStore } from '../store/useStore';
 import { templates } from '../templates';
 import { importData, generateSampleData } from '../utils/dataImport';
-import { Upload, Table, Sparkles } from 'lucide-react';
+import { Upload, Table, Sparkles, LogIn } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { cn } from '../lib/utils';
+import { useAuth } from '../hooks/useAuth';
+import { AuthModal } from './auth/AuthModal';
+import { UserMenu } from './UserMenu';
 
 export const Sidebar: React.FC = () => {
   const { setDataset, setSelectedTemplate, updateChartConfig } = useStore();
+  const { isAuthenticated } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -41,14 +46,30 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <div className="w-80 bg-card border-r border-border flex flex-col h-full">
-      <div className="p-6 border-b border-border">
-        <div className="flex items-center gap-2 mb-1">
-          <Sparkles className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-bold text-foreground">VizSector</h1>
+    <>
+      <div className="w-80 bg-card border-r border-border flex flex-col h-full">
+        <div className="p-6 border-b border-border">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-6 w-6 text-primary" />
+              <h1 className="text-2xl font-bold text-foreground">VizSector</h1>
+            </div>
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <Button
+                onClick={() => setShowAuthModal(true)}
+                variant="outline"
+                size="sm"
+                className="gap-2"
+              >
+                <LogIn size={16} />
+                Sign In
+              </Button>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground">Data Visualization Studio</p>
         </div>
-        <p className="text-sm text-muted-foreground">Data Visualization Studio</p>
-      </div>
 
       <div className="p-4 border-b border-border">
         <h2 className="text-sm font-semibold text-foreground mb-3">Data</h2>
@@ -111,5 +132,8 @@ export const Sidebar: React.FC = () => {
         <p className="text-primary/70">Flourish Studio Clone</p>
       </div>
     </div>
+
+    <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
+  </>
   );
 };

@@ -50,6 +50,15 @@ A powerful data visualization platform inspired by Flourish Studio, built with R
 - **Column Information** - See dataset statistics
 - **Responsive Design** - Works on all screen sizes
 
+### ☁️ Cloud Features (Powered by Supabase)
+- **User Authentication** - Sign in with email, Google, or GitHub
+- **Save to Cloud** - Store visualizations securely in the cloud
+- **Load Projects** - Access your saved visualizations from anywhere
+- **Public/Private Sharing** - Control who can see your visualizations
+- **Project Management** - Organize and manage all your visualizations
+- **Duplicate Projects** - Quickly create copies of visualizations
+- **User Profiles** - Personalize your account with name and avatar
+
 ## Getting Started
 
 ### Installation
@@ -67,6 +76,22 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+### Supabase Setup (Optional - for Cloud Features)
+
+To enable cloud features like authentication and saving projects:
+
+1. Create a free account at [supabase.com](https://supabase.com)
+2. Create a new project
+3. Copy `.env.example` to `.env`
+4. Add your Supabase credentials to `.env`:
+   ```env
+   VITE_SUPABASE_URL=your-project-url
+   VITE_SUPABASE_ANON_KEY=your-anon-key
+   ```
+5. Run the database migration (see `SUPABASE_SETUP.md` for detailed instructions)
+
+**Note:** The app works perfectly without Supabase for local-only use. Cloud features are entirely optional!
 
 ### Quick Start
 
