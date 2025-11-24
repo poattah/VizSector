@@ -135,7 +135,7 @@ export const ProjectsPanel = () => {
             </div>
             <button
               onClick={() => setShowSaveDialog(true)}
-              className="p-2 hover:bg-muted rounded-lg transition"
+              className="p-2 hover:bg-accent/10 rounded-lg transition-all duration-200 text-muted-foreground hover:text-foreground"
               title="Save current visualization"
             >
               <Save size={18} />
@@ -151,7 +151,7 @@ export const ProjectsPanel = () => {
               <p className="mb-4">No saved visualizations yet</p>
               <button
                 onClick={() => setShowSaveDialog(true)}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 font-medium shadow-sm hover-glow"
               >
                 <Plus size={18} />
                 Create First Project
@@ -162,14 +162,14 @@ export const ProjectsPanel = () => {
               {visualizations.map((viz) => (
                 <div
                   key={viz.id}
-                  className={`p-3 border rounded-lg transition cursor-pointer hover:border-primary/50 ${
+                  className={`p-3 border rounded-lg transition-all duration-200 cursor-pointer hover:border-primary/50 hover-glow ${
                     currentVizId === viz.id ? 'border-primary bg-primary/5' : 'border-border'
                   }`}
                   onClick={() => handleLoad(viz)}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-sm truncate">{viz.title}</h3>
+                      <h3 className="font-medium text-sm truncate text-foreground">{viz.title}</h3>
                       {viz.description && (
                         <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                           {viz.description}
@@ -198,14 +198,14 @@ export const ProjectsPanel = () => {
                     <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
                       <button
                         onClick={() => handleDuplicate(viz.id)}
-                        className="p-1.5 hover:bg-muted rounded transition"
+                        className="p-1.5 hover:bg-accent/10 rounded transition-all duration-200 text-muted-foreground hover:text-foreground"
                         title="Duplicate"
                       >
                         <Copy size={14} />
                       </button>
                       <button
                         onClick={() => handleDelete(viz.id)}
-                        className="p-1.5 hover:bg-destructive/10 hover:text-destructive rounded transition"
+                        className="p-1.5 hover:bg-destructive/10 hover:text-destructive rounded transition-all duration-200 text-muted-foreground"
                         title="Delete"
                       >
                         <Trash2 size={14} />
@@ -221,32 +221,32 @@ export const ProjectsPanel = () => {
 
       {/* Save Dialog */}
       {showSaveDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-card rounded-lg shadow-xl max-w-md w-full mx-4">
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fade-in">
+          <div className="bg-card rounded-xl shadow-2xl max-w-md w-full mx-4 border border-border animate-scale-in">
             <div className="p-6 border-b border-border">
-              <h3 className="text-lg font-semibold">
+              <h3 className="text-lg font-semibold text-foreground tracking-tight">
                 {currentVizId ? 'Update Visualization' : 'Save Visualization'}
               </h3>
             </div>
             <div className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-2">Title</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Title</label>
                 <input
                   type="text"
                   value={saveTitle}
                   onChange={(e) => setSaveTitle(e.target.value)}
                   placeholder={chartConfig.title}
-                  className="w-full px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                  className="w-full px-3 py-2.5 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring transition-shadow text-foreground"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2">Description (optional)</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Description (optional)</label>
                 <textarea
                   value={saveDescription}
                   onChange={(e) => setSaveDescription(e.target.value)}
                   placeholder="Describe your visualization..."
                   rows={3}
-                  className="w-full px-3 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+                  className="w-full px-3 py-2.5 bg-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring resize-none transition-shadow text-foreground"
                 />
               </div>
               <div>
@@ -255,22 +255,22 @@ export const ProjectsPanel = () => {
                     type="checkbox"
                     checked={isPublic}
                     onChange={(e) => setIsPublic(e.target.checked)}
-                    className="rounded"
+                    className="rounded border-input"
                   />
-                  <span className="text-sm">Make this visualization public</span>
+                  <span className="text-sm text-foreground">Make this visualization public</span>
                 </label>
               </div>
             </div>
             <div className="p-6 border-t border-border flex gap-3 justify-end">
               <button
                 onClick={() => setShowSaveDialog(false)}
-                className="px-4 py-2 border border-input rounded-lg hover:bg-muted transition"
+                className="px-4 py-2.5 border border-input rounded-lg hover:bg-accent/10 transition-all duration-200 font-medium text-sm"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition"
+                className="px-4 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-all duration-200 font-medium shadow-sm hover-glow"
               >
                 {currentVizId ? 'Update' : 'Save'}
               </button>

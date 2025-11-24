@@ -36,7 +36,7 @@ export const DataTable = () => {
         <tbody className="bg-card divide-y divide-border">
           {dataset.data.map((row, idx) => (
             <tr key={idx} className={cn(
-              "transition-colors hover:bg-muted/50",
+              "transition-all duration-200 hover:bg-accent/5",
               idx % 2 === 0 ? 'bg-card' : 'bg-muted/20'
             )}>
               <td className="px-4 py-3 whitespace-nowrap text-sm text-muted-foreground font-medium border-r border-border">

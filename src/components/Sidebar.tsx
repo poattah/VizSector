@@ -4,11 +4,11 @@ import { templates } from '../templates';
 import { importData, generateSampleData } from '../utils/dataImport';
 import { Upload, Table, Sparkles, LogIn } from 'lucide-react';
 import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
 import { cn } from '../lib/utils';
 import { useAuth } from '../hooks/useAuth';
 import { AuthModal } from './auth/AuthModal';
 import { UserMenu } from './UserMenu';
+import { ThemeToggle } from './ThemeToggle';
 
 export const Sidebar: React.FC = () => {
   const { setDataset, setSelectedTemplate, updateChartConfig } = useStore();
@@ -49,26 +49,31 @@ export const Sidebar: React.FC = () => {
     <>
       <div className="w-80 bg-card border-r border-border flex flex-col h-full">
         <div className="p-6 border-b border-border">
-          <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-6 w-6 text-primary" />
-              <h1 className="text-2xl font-bold text-foreground">VizSector</h1>
+              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+                <Sparkles className="h-4 w-4 text-white" />
+              </div>
+              <h1 className="text-xl font-semibold text-foreground tracking-tight">VizSector</h1>
             </div>
-            {isAuthenticated ? (
-              <UserMenu />
-            ) : (
-              <Button
-                onClick={() => setShowAuthModal(true)}
-                variant="outline"
-                size="sm"
-                className="gap-2"
-              >
-                <LogIn size={16} />
-                Sign In
-              </Button>
-            )}
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              {isAuthenticated ? (
+                <UserMenu />
+              ) : (
+                <Button
+                  onClick={() => setShowAuthModal(true)}
+                  variant="outline"
+                  size="sm"
+                  className="gap-2 hover-glow"
+                >
+                  <LogIn size={16} />
+                  <span className="hidden sm:inline">Sign In</span>
+                </Button>
+              )}
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">Data Visualization Studio</p>
+          <p className="text-xs text-muted-foreground">Professional data visualization platform</p>
         </div>
 
       <div className="p-4 border-b border-border">
@@ -100,36 +105,37 @@ export const Sidebar: React.FC = () => {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4">
-        <h2 className="text-sm font-semibold text-foreground mb-3">Templates</h2>
-        <div className="space-y-2">
+        <h2 className="text-sm font-semibold text-foreground mb-3 px-1">Templates</h2>
+        <div className="space-y-1">
           {templates.map((template) => (
-            <Card
+            <button
               key={template.id}
               onClick={() => handleTemplateSelect(template.id)}
               className={cn(
-                "cursor-pointer transition-all hover:shadow-md hover:border-primary/50",
-                "group"
+                "w-full text-left rounded-lg border border-transparent",
+                "hover:border-border hover:bg-accent/5 transition-all duration-200",
+                "group p-3 flex items-center gap-3"
               )}
             >
-              <CardContent className="p-3">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{template.thumbnail}</span>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors">
-                      {template.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground truncate">{template.description}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center text-xl shrink-0 group-hover:scale-110 transition-transform">
+                {template.thumbnail}
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors truncate">
+                  {template.name}
+                </h3>
+                <p className="text-xs text-muted-foreground truncate">{template.description}</p>
+              </div>
+            </button>
           ))}
         </div>
       </div>
 
-      <div className="p-4 border-t border-border text-xs text-muted-foreground">
-        <p>© 2025 VizSector</p>
-        <p className="text-primary/70">Flourish Studio Clone</p>
+      <div className="p-4 border-t border-border">
+        <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <span>© 2025 VizSector</span>
+          <span className="text-primary">v1.0</span>
+        </div>
       </div>
     </div>
 

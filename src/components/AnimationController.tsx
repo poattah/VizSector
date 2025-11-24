@@ -49,11 +49,11 @@ export const AnimationController: React.FC = () => {
   }
 
   return (
-    <div className="bg-card border-t border-border px-6 py-4 shadow-sm">
+    <div className="bg-card border-t border-border px-6 py-4 shadow-lg animate-slide-in">
       <div className="flex items-center gap-4">
         <Button
           onClick={handlePlayPause}
-          className="gap-2"
+          className="gap-2 transition-all duration-200"
         >
           {isAnimating ? <Pause size={18} /> : <Play size={18} />}
           {isAnimating ? 'Pause' : 'Play'}
@@ -61,7 +61,7 @@ export const AnimationController: React.FC = () => {
         <Button
           onClick={handleReset}
           variant="secondary"
-          className="gap-2"
+          className="gap-2 transition-all duration-200"
         >
           <RotateCcw size={18} />
           Reset
@@ -73,7 +73,7 @@ export const AnimationController: React.FC = () => {
             value={currentFrame}
             onChange={(e) => setCurrentFrame(Number(e.target.value))}
           />
-          <div className="text-xs text-muted-foreground mt-2 text-center">
+          <div className="text-xs text-muted-foreground mt-2 text-center font-medium">
             Frame: {currentFrame + 1} / {maxFrames}
           </div>
         </div>

@@ -37,10 +37,10 @@ export const ChartRenderer: React.FC = () => {
 
   if (!dataset || !dataset.data || dataset.data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full text-gray-500">
-        <div className="text-center">
+      <div className="flex items-center justify-center h-full text-muted-foreground">
+        <div className="text-center animate-fade-in">
           <div className="text-6xl mb-4">📊</div>
-          <p className="text-lg">No data loaded</p>
+          <p className="text-lg text-foreground">No data loaded</p>
           <p className="text-sm">Import a dataset to get started</p>
         </div>
       </div>
@@ -377,8 +377,8 @@ export const ChartRenderer: React.FC = () => {
 
       default:
         return (
-          <div className="text-center text-gray-500 p-8">
-            <p className="text-lg font-medium">Chart type "{type}" is not yet implemented</p>
+          <div className="text-center text-muted-foreground p-8 animate-fade-in">
+            <p className="text-lg font-medium text-foreground">Chart type "{type}" is not yet implemented</p>
             <p className="text-sm mt-2">Please select a different chart type</p>
           </div>
         );
@@ -386,8 +386,8 @@ export const ChartRenderer: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col p-6 bg-white">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">{title}</h2>
+    <div className="h-full flex flex-col p-6 bg-background animate-fade-in">
+      <h2 className="text-2xl font-semibold mb-6 text-foreground tracking-tight">{title}</h2>
       <ResponsiveContainer width="100%" height="100%">
         {renderChart()}
       </ResponsiveContainer>

@@ -53,10 +53,10 @@ export const PropertiesPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('style')}
           className={cn(
-            "flex-1 px-4 py-3 text-sm font-medium transition-colors",
+            "flex-1 px-4 py-3 text-sm font-medium transition-all duration-200",
             activeTab === 'style'
               ? 'text-primary border-b-2 border-primary bg-background'
-              : 'text-muted-foreground hover:text-foreground'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           )}
         >
           Style
@@ -64,10 +64,10 @@ export const PropertiesPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('data')}
           className={cn(
-            "flex-1 px-4 py-3 text-sm font-medium transition-colors",
+            "flex-1 px-4 py-3 text-sm font-medium transition-all duration-200",
             activeTab === 'data'
               ? 'text-primary border-b-2 border-primary bg-background'
-              : 'text-muted-foreground hover:text-foreground'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           )}
         >
           Data
@@ -75,10 +75,10 @@ export const PropertiesPanel: React.FC = () => {
         <button
           onClick={() => setActiveTab('export')}
           className={cn(
-            "flex-1 px-4 py-3 text-sm font-medium transition-colors",
+            "flex-1 px-4 py-3 text-sm font-medium transition-all duration-200",
             activeTab === 'export'
               ? 'text-primary border-b-2 border-primary bg-background'
-              : 'text-muted-foreground hover:text-foreground'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
           )}
         >
           Export
@@ -111,12 +111,12 @@ export const PropertiesPanel: React.FC = () => {
                   <Card
                     key={idx}
                     onClick={() => updateChartConfig({ colors: preset })}
-                    className="cursor-pointer transition-all hover:shadow-md hover:border-primary/50"
+                    className="cursor-pointer transition-all duration-200 hover:shadow-md hover:border-primary/50 hover-glow"
                   >
                     <CardContent className="p-2">
                       <div className="flex gap-1">
                         {preset.map((color, i) => (
-                          <div key={i} className="flex-1 h-8 rounded-sm" style={{ backgroundColor: color }} />
+                          <div key={i} className="flex-1 h-8 rounded-sm transition-transform hover:scale-105" style={{ backgroundColor: color }} />
                         ))}
                       </div>
                     </CardContent>
