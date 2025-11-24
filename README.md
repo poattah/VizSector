@@ -4,7 +4,7 @@ A powerful data visualization platform inspired by Flourish Studio, built with R
 
 ## Features
 
-### 📊 Multiple Chart Types
+### 📊 Multiple Chart Types (16+ Templates)
 - **Bar Chart** - Compare values across categories
 - **Line Chart** - Show trends over time
 - **Area Chart** - Visualize cumulative totals
@@ -12,7 +12,15 @@ A powerful data visualization platform inspired by Flourish Studio, built with R
 - **Donut Chart** - Modern pie chart variation
 - **Scatter Plot** - Find correlations between variables
 - **Column Chart** - Vertical bar chart
-- **Bar Chart Race** - Animated racing bar chart (coming soon)
+- **Stacked Bar Chart** - Compare parts of a whole across categories
+- **Stacked Area Chart** - Show contribution of parts to a total over time
+- **Radar Chart** - Compare multiple variables
+- **Treemap** - Hierarchical data visualization
+- **Radial Bar Chart** - Circular bar chart
+- **Bubble Chart** - Three-dimensional data points
+- **Composed Chart** - Combine multiple chart types
+- **Funnel Chart** - Visualize stages in a process
+- **Bar Chart Race** - Animated racing bar chart
 
 ### 📁 Data Import
 - **CSV Files** - Import comma-separated values

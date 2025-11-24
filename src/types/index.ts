@@ -18,7 +18,14 @@ export type ChartType =
   | 'donut'
   | 'column'
   | 'race-bar'
-  | 'bubble';
+  | 'bubble'
+  | 'radar'
+  | 'treemap'
+  | 'composed'
+  | 'stacked-bar'
+  | 'stacked-area'
+  | 'radial-bar'
+  | 'funnel';
 
 export interface ChartConfig {
   type: ChartType;
