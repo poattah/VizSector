@@ -1,0 +1,51 @@
+export interface DataPoint {
+  [key: string]: string | number | null;
+}
+
+export interface Dataset {
+  id: string;
+  name: string;
+  data: DataPoint[];
+  columns: string[];
+}
+
+export type ChartType =
+  | 'bar'
+  | 'line'
+  | 'scatter'
+  | 'pie'
+  | 'area'
+  | 'donut'
+  | 'column'
+  | 'race-bar'
+  | 'bubble';
+
+export interface ChartConfig {
+  type: ChartType;
+  title: string;
+  xAxis?: string;
+  yAxis?: string;
+  category?: string;
+  value?: string;
+  colors: string[];
+  showLegend: boolean;
+  showGrid: boolean;
+  animationDuration: number;
+  animationEnabled: boolean;
+}
+
+export interface VisualizationState {
+  dataset: Dataset | null;
+  chartConfig: ChartConfig;
+  isAnimating: boolean;
+  currentFrame: number;
+}
+
+export interface Template {
+  id: string;
+  name: string;
+  description: string;
+  type: ChartType;
+  thumbnail: string;
+  defaultConfig: Partial<ChartConfig>;
+}
